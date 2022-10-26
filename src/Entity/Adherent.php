@@ -12,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Adherent
 {
+    const ROLE_ADMIN = "ROLE_ADMIN" ;
+    const ROLE_MANAGER = "ROLE_MANAGER";
+    const ROLE_ADHERENT = "ROLE_ADHERENT" ;
+    const ROLE_DEFAULT = "ROLE_ADHERENT" ;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -59,9 +64,15 @@ class Adherent
      */
     private $prets;
 
+    /**
+     * @ORM\Column(type="simple_array")
+     */
+    private $roles = [];
+
     public function __construct()
     {
         $this->prets = new ArrayCollection();
+        $this->roles[] =  Adherent::ROLE_DEFAULT;
     }
 
     public function getId(): ?int
@@ -179,6 +190,18 @@ class Adherent
                 $pret->setAdherent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRoles(): ?array
+    {
+        return $this->roles;
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
     }
