@@ -26,7 +26,9 @@ class AdherentFixtures extends Fixture
         $adherent->setCodePostal("69001");
         $adherent->setEMail(strtolower($adherent->getNom())."@gmail.com");
         $adherent->setPassword($this->passwordHasher->hashPassword($adherent, $adherent->getNom()));
-        $this->manager->persist($adherent);          
+        $manager->persist($adherent);  
+        $manager->flush();  
+        
         //creer admin
         $adherentAdmin = new Adherent();
         $adherentAdmin->setNom("Dafson");
@@ -38,8 +40,8 @@ class AdherentFixtures extends Fixture
         $adherentAdmin->setPassword($this->passwordHasher->hashPassword($adherentAdmin, $adherentAdmin->getNom()));
         $roleAdmin[] = Adherent::ROLE_ADMIN;
         $adherentAdmin->setRoles($roleAdmin);
-        $this->manager->persist($adherentAdmin);        
-        $this->manager->flush();  
+        $manager->persist($adherentAdmin);        
+        $manager->flush();  
         //creer adherent Manager
         $adherentManager = new Adherent();
         $adherentManager->setNom("Lajoie");
@@ -51,8 +53,8 @@ class AdherentFixtures extends Fixture
         $adherentManager->setPassword($this->passwordHasher->hashPassword($adherentManager, $adherentManager->getNom()));     
         $roleManager[] = Adherent::ROLE_MANAGER;
         $adherentManager->setRoles($roleManager);
-        $this->manager->persist($adherentManager);        
-        $this->manager->flush();   
+        $manager->persist($adherentManager);        
+        $manager->flush();   
         
     }
 }
