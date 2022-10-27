@@ -3,7 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Adherent;
-use Doctrine\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager as PersistenceObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -16,7 +16,7 @@ class AdherentFixtures extends Fixture
         $this->passwordHasher = $passwordHasher;
     }
     
-    public function load(ObjectManager $manager): void
+    public function load(PersistenceObjectManager $manager): void
     {
         $adherent = new Adherent();
         $adherent->setNom("Dupont");
