@@ -71,6 +71,11 @@ class Adherent implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $roles = [];
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $ville;
+
     public function __construct()
     {
         $this->prets = new ArrayCollection();
@@ -228,6 +233,18 @@ class Adherent implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUsername()
     {
             
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?string $ville): self
+    {
+        $this->ville = $ville;
+
+        return $this;
     }
 
 }
