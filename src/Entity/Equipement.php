@@ -2,13 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\EquipementRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\EquipementRepository;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=EquipementRepository::class)
+ * @ApiResource()
  */
 class Equipement
 {
@@ -58,6 +61,7 @@ class Equipement
 
     /**
      * @ORM\OneToMany(targetEntity=Pret::class, mappedBy="equipement")
+     * @ApiSubresource()
      */
     private $prets;
 

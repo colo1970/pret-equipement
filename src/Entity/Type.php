@@ -2,13 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\TypeRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TypeRepository;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=TypeRepository::class)
+ * @ApiResource()
  */
 class Type
 {
@@ -26,6 +29,7 @@ class Type
 
     /**
      * @ORM\OneToMany(targetEntity=Equipement::class, mappedBy="type")
+     * @ApiSubresource()
      */
     private $equipements;
 
