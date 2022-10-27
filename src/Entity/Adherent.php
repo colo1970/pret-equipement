@@ -2,15 +2,17 @@
 
 namespace App\Entity;
 
-use App\Repository\AdherentRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AdherentRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=AdherentRepository::class)
  */
-class Adherent
+class Adherent implements UserInterface, PasswordAuthenticatedUserInterface
 {
     const ROLE_ADMIN = "ROLE_ADMIN" ;
     const ROLE_MANAGER = "ROLE_MANAGER";
@@ -205,4 +207,27 @@ class Adherent
 
         return $this;
     }
+
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+    
+
+    public function eraseCredentials()
+    {
+            
+    }
+
+
+    public function getUsername()
+    {
+            
+    }
+
 }
