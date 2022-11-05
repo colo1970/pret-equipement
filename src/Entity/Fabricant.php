@@ -29,7 +29,6 @@ class Fabricant
 
     /**
      * @ORM\OneToMany(targetEntity=Equipement::class, mappedBy="fabricant")
-     * @ApiSubresource()
      */
     private $equipements;
 

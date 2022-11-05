@@ -19,6 +19,13 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+    'App\Serializer\EquipementContextBuilder':
+        decorates: 'api_platform.serializer.context_builder'
+        arguments: [ '@App\Serializer\EquipementContextBuilder.inner' ]
+        autoconfigure: false
+
+    app.pret.post:
+        class: App\EventSubscriber\PretSubscriber
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

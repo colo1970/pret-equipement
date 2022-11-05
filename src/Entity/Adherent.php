@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Controller\AdherentController;
 use App\Repository\AdherentRepository;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
@@ -13,7 +14,15 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=AdherentRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *     itemOperations={
+ *          "getNbPrets"={
+ *              "method"="GET",
+ *              "route_name"="app_count_nb_pret_by_adherent",
+ *              "controller"=AdherentController::class
+ *            }
+ *     }
+ * )
  */
 class Adherent implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -83,7 +92,8 @@ class Adherent implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->prets = new ArrayCollection();
-        $this->roles[] =  Adherent::ROLE_DEFAULT;
+        $roles[]= self::ROLE_DEFAULT;
+        $this->roles = $roles;
     }
 
     public function getId(): ?int
@@ -233,10 +243,10 @@ class Adherent implements UserInterface, PasswordAuthenticatedUserInterface
             
     }
 
-
+    //permet d'identifié l'utilisateur
     public function getUsername()
     {
-            
+        return $this->email;
     }
 
     public function getVille(): ?string

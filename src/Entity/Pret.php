@@ -4,12 +4,30 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PretRepository;
+use App\Controller\AdherentController;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=PretRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *     collectionOperations={
+ *         "post_pret"={
+ *              "method"="POST",
+ *              "path"="/pret/equipement/new",
+ *         }
+ *     },
+ *     itemOperations={
+ *         "get_item_pret"={
+ *              "method"="GET",
+ *              "path"="/pret/equipement/{id}",
+ *              "security"="(is_granted('ROLE_ADHERENT') and object.getAdherent()==user) or is_granted('ROLE_MANAGER')",
+ *              "security_message"="Vous ne pouvez pas consulter"
+ *         },
+ *       
+ *     }
+ * )
  */
 class Pret
 {
@@ -22,6 +40,7 @@ class Pret
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"get_col_pret"})
      */
     private $datePret;
 
@@ -46,6 +65,13 @@ class Pret
      * @ORM\JoinColumn(nullable=false)
      */
     private $equipement;
+
+    public function __construct()
+    {
+        $this->datePret = new \DateTimeImmutable();
+        $this->dateRetourPrevu = $this->datePret->modify('+21 day');
+        
+    }
 
     public function getId(): ?int
     {

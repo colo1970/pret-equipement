@@ -29,7 +29,6 @@ class Type
 
     /**
      * @ORM\OneToMany(targetEntity=Equipement::class, mappedBy="type")
-     * @ApiSubresource()
      */
     private $equipements;
 

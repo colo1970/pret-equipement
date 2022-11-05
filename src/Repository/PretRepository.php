@@ -21,46 +21,17 @@ class PretRepository extends ServiceEntityRepository
         parent::__construct($registry, Pret::class);
     }
 
-    public function add(Pret $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->persist($entity);
+    public function nombrePretParAdherentBy($idAdherent)
+        {
+            return $this->createQueryBuilder('p')
+                ->select('count(p.id) AS nombrePret, a.nom, a.prenom')
+                ->leftJoin('p.adherent', 'a')
+                ->andWhere('p.adherent = :idAdherent')
+                ->setParameter('idAdherent', $idAdherent)
+                ->groupBy('a')
+                ->orderBy('a.nom', 'ASC')
+                ->getQuery()
+                ->getResult();
+        }  
 
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
-    public function remove(Pret $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
-//    /**
-//     * @return Pret[] Returns an array of Pret objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Pret
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }
