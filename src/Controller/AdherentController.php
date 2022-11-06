@@ -19,7 +19,7 @@ class AdherentController extends AbstractController
      */
     public function index(TokenStorageInterface $token,  PretRepository $pretRepo, $id): Response
     {
-        dd($id);
+        
         $nbPretParAdherent=  $pretRepo->countByAdherentId($id);
         return $this->json($nbPretParAdherent);
     }
